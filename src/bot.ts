@@ -14,7 +14,10 @@ program
   .description("Run bot")
   .option("--user-id <id>", "Id of user wich interact with bot")
   .option("--api-url <url>", "Url of telegram bot api")
-  .option("--token <token>", "The bot's token as acquired from https://t.me/BotFather")
+  .option(
+    "--token <token>",
+    "The bot's token as acquired from https://t.me/BotFather"
+  )
   .action((option) => {
     const bot = new Bot(option.token, {
       client: { apiRoot: option.apiUrl },
@@ -40,7 +43,7 @@ program
           ctx.chatId,
           "Uploading"
         );
-        await ctx.replyWithVideo(file);
+        await ctx.replyWithVideo(file, { supports_streaming: true });
         await bot.api.deleteMessage(ctx.chatId, uploadMessage.message_id);
         fs.rmSync(metadata.savedFilePath, { recursive: true, force: true });
       } catch (err) {
